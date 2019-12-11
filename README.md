@@ -7,7 +7,7 @@
 Install via npm:
 
 ```console
-$ npm i @godaddy/split-node-serializer --save
+$ npm i @godaddy/split-javascript-data-loader --save
 ```
 
 ## Testing
