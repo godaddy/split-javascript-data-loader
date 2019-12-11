@@ -1,5 +1,7 @@
 # split-javascript-data-loader
 
+ Loads serialized rule/segment data from Split.io into the browser local storage.
+
 ## Installation
 
 Install via npm:
