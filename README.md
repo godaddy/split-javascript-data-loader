@@ -7,7 +7,7 @@
 Install via npm:
 
 ```console
-$ npm i @godaddy/split-javascript-data-loader --save
+$ npm i @godaddy/split-data-loader --save
 ```
 
 ## Testing
