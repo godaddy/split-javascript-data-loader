@@ -1,5 +1,5 @@
 'use strict'
 
-module.exports = function loadDataIntoLocalStorage ({ serializedData = {} }) {
+export default function loadDataIntoLocalStorage ({ serializedData = {} }) {
   throw new Error('Not implemented')
 }

@@ -1,3 +1,3 @@
-const loadDataIntoLocalStorage = require('./load-data')
+import loadDataIntoLocalStorage from './load-data'
 
-module.exports = loadDataIntoLocalStorage
+export default loadDataIntoLocalStorage
