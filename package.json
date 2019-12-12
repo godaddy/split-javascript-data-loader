@@ -4,13 +4,13 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "build": "babel lib -d lib --ignore 'lib/*.test.js'",
-    "build-dry": "babel lib --ignore 'lib/*.test.js'",
+    "build": "babel src -d lib --ignore 'src/*.test.js'",
+    "build-dry": "babel src --ignore 'src/*.test.js'",
     "prepublishOnly": "npm run build",
-    "coverage": "nyc mocha 'lib/*.test.js'",
+    "coverage": "nyc mocha 'src/*.test.js'",
     "lint": "standard --fix --env mocha",
     "release": "standard-version --tag-prefix=''",
-    "test": "mocha --exit --recursive lib"
+    "test": "mocha --exit --recursive src"
   },
   "repository": {
     "type": "git",
