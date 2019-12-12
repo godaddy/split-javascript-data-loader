@@ -2,7 +2,9 @@
   "name": "@godaddy/split-data-loader",
   "version": "0.0.1",
   "description": "",
-  "main": "lib/index.js",
+  "main": "./lib/index.js",
+  "browser": "./lib/index.js",
+  "module": "./src/index.js",
   "scripts": {
     "build": "babel src -d lib --ignore 'src/*.test.js'",
     "build-dry": "babel src --ignore 'src/*.test.js'",
