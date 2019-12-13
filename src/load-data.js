@@ -3,7 +3,7 @@
 import { SEGMENT_SUB_KEY, SPLIT_SUB_KEY, TILL, USING_SEGMENTS } from './localStorage-keys'
 
 export default function loadDataIntoLocalStorage ({ serializedData = {} }) {
-  const { userId, splitsData, segmentsData, usingSegmentsCount, since } = serializedData
+  const { segmentsData, since, splitsData, userId, usingSegmentsCount } = serializedData
   const windowLocalStorage = window.localStorage
 
   // Do not load data if current localStorage data is more recent
