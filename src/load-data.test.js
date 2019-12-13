@@ -1,8 +1,8 @@
 'use strict'
 
-const { expect } = require('chai')
+import { expect } from 'chai'
 
-const loadDataIntoLocalStorage = require('./load-data')
+import loadDataIntoLocalStorage from './load-data'
 
 describe('lib.load-data.loadDataIntoLocalStorage', () => {
   it('should throw a not implemented error', () => {
