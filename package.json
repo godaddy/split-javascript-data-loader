@@ -2,12 +2,17 @@
   "name": "@godaddy/split-data-loader",
   "version": "0.0.1",
   "description": "",
-  "main": "lib/index.js",
+  "main": "./lib/index.js",
+  "browser": "./lib/index.js",
+  "module": "./src/index.js",
   "scripts": {
-    "coverage": "nyc mocha 'lib/*.test.js'",
+    "build": "babel src -d lib --ignore 'src/*.test.js'",
+    "build-dry": "babel src --ignore 'src/*.test.js'",
+    "prepublishOnly": "npm run build",
+    "coverage": "nyc mocha 'src/*.test.js' --require @babel/register",
     "lint": "standard --fix --env mocha",
     "release": "standard-version --tag-prefix=''",
-    "test": "mocha --exit --recursive lib"
+    "test": "mocha --exit --recursive src --require @babel/register"
   },
   "repository": {
     "type": "git",
@@ -17,6 +22,10 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "@babel/cli": "7.7.5",
+    "@babel/core": "7.7.5",
+    "@babel/preset-env": "7.7.6",
+    "@babel/register": "7.7.4",
     "chai": "4.2.0",
     "mocha": "6.2.2",
     "nyc": "14.1.1",
