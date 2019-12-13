@@ -1,8 +1,8 @@
 'use strict'
 
-const { SEGMENT_SUB_KEY, SPLIT_SUB_KEY, TILL, USING_SEGMENTS } = require('./localStorage-keys')
+import { SEGMENT_SUB_KEY, SPLIT_SUB_KEY, TILL, USING_SEGMENTS } from './localStorage-keys'
 
-module.exports = function loadDataIntoLocalStorage ({ serializedData = {} }) {
+export default function loadDataIntoLocalStorage ({ serializedData = {} }) {
   const { userId, splitsData, segmentsData, usingSegmentsCount, since } = serializedData
   const windowLocalStorage = window.localStorage
 

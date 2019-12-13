@@ -1,22 +1,16 @@
 'use strict'
 
-<<<<<<< HEAD:lib/load-data.test.js
-const { expect } = require('chai')
-const { JSDOM } = require('jsdom')
+import { expect } from 'chai'
+import { JSDOM } from 'jsdom'
 
-const loadDataIntoLocalStorage = require('./load-data')
-const { TILL, USING_SEGMENTS } = require('./localStorage-keys')
+import loadDataIntoLocalStorage from './load-data'
+import { TILL, USING_SEGMENTS } from './localStorage-keys'
 
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>', { url: 'http://localhost' })
 const { window } = jsdom
 
 const smallerSince = 0
 const largerSince = 1
-=======
-import { expect } from 'chai'
-
-import loadDataIntoLocalStorage from './load-data'
->>>>>>> master:src/load-data.test.js
 
 describe('lib.load-data.loadDataIntoLocalStorage', () => {
   beforeEach(() => {
@@ -41,7 +35,7 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     const serializedData = { userId: '', splitsData: {}, segmentsData: {}, usingSegmentsCount: 0, since: largerSince }
     loadDataIntoLocalStorage({ serializedData })
 
-    expect(window.localStorage.getItem(clearedItemKey)).to.be.null
+    expect(window.localStorage.getItem(clearedItemKey)).to.equal(null)
     expect(window.localStorage.getItem(TILL)).to.equal(largerSince.toString())
   })
 
@@ -49,8 +43,8 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     const serializedExperimentOne = 'serialized_experiment_1'
     const serializedExperimentTwo = 'serialized_experiment_2'
     const splitsData = {
-      "experiment_1": serializedExperimentOne,
-      "experiment_2": serializedExperimentTwo
+      experiment_1: serializedExperimentOne,
+      experiment_2: serializedExperimentTwo
     }
     window.localStorage.setItem(TILL, smallerSince)
 
@@ -67,8 +61,8 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     const userId = 'visitor_guid_1'
     const usingSegmentsCount = 2
     const segmentsData = {
-      "segment_1": [userId, 'visitor_guid_2'],
-      "segment_2": [userId, 'visitor_guid_3']
+      segment_1: [userId, 'visitor_guid_2'],
+      segment_2: [userId, 'visitor_guid_3']
     }
     window.localStorage.setItem(TILL, smallerSince)
 
