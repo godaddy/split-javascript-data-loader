@@ -1,5 +1,6 @@
 'use strict'
 
+<<<<<<< HEAD:lib/load-data.test.js
 const { expect } = require('chai')
 const { JSDOM } = require('jsdom')
 
@@ -11,6 +12,11 @@ const { window } = jsdom
 
 const smallerSince = 0
 const largerSince = 1
+=======
+import { expect } from 'chai'
+
+import loadDataIntoLocalStorage from './load-data'
+>>>>>>> master:src/load-data.test.js
 
 describe('lib.load-data.loadDataIntoLocalStorage', () => {
   beforeEach(() => {
