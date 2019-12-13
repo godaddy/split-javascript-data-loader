@@ -22,15 +22,11 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
-    "@babel/preset-env": "^7.7.6",
-    "@babel/register": "^7.7.4",
-    "chai": "^4.2.0",
-    "mocha": "^6.2.2",
-    "nyc": "^14.1.1",
-    "standard": "^14.3.1",
-    "standard-version": "^7.0.1"
+    "chai": "4.2.0",
+    "mocha": "6.2.2",
+    "nyc": "14.1.1",
+    "standard": "14.3.1",
+    "standard-version": "7.0.1"
   },
   "nyc": {
     "check-coverage": true,
