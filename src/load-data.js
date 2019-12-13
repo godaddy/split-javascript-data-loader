@@ -10,7 +10,12 @@ export default function loadDataIntoLocalStorage ({ serializedData = {} }) {
   if (since <= windowLocalStorage.getItem(TILL_KEY)) {
     return
   }
-  windowLocalStorage.clear()
+  // Split.IO recommends cleaning up the localStorage data
+  Object.keys(windowLocalStorage).forEach(key => {
+    if (key.includes('SPLITIO')) {
+      windowLocalStorage.removeItem(key)
+    }
+  })
   windowLocalStorage.setItem(TILL_KEY, since)
 
   // splitsData in an object where the property is the split name and the pertaining value is a stringified json of its data

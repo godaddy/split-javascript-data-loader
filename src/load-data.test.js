@@ -16,7 +16,7 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     window.localStorage.clear()
   })
   it('should not affect localStorage if its data is more recent', () => {
-    const nonClearedItemKey = 'should_not_be_cleared'
+    const nonClearedItemKey = 'SPLITIO.should_not_be_cleared'
     window.localStorage.setItem(nonClearedItemKey, true)
     window.localStorage.setItem(TILL_KEY, LARGER_SINCE)
 
@@ -25,8 +25,8 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     expect(window.localStorage.getItem(nonClearedItemKey)).to.equal('true')
   })
 
-  it('should clear localStorage and change till to more recent value with larger since value', () => {
-    const clearedItemKey = 'should_be_cleared'
+  it('should clean up localStorage and change till to more recent value with larger since value', () => {
+    const clearedItemKey = 'SPLITIO.should_be_cleared'
     window.localStorage.setItem(clearedItemKey, true)
     window.localStorage.setItem(TILL_KEY, SMALLER_SINCE)
 
