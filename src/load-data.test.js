@@ -1,40 +1,43 @@
 'use strict'
 
 import { expect } from 'chai'
-import { JSDOM } from 'jsdom'
+import sinon from 'sinon'
 
 import loadDataIntoLocalStorage from './load-data'
 
-const TILL_KEY = 'SPLITIO.splits.till'
 const SMALLER_SINCE = 0
 const LARGER_SINCE = 1
 
 describe('lib.load-data.loadDataIntoLocalStorage', () => {
+  let localStorageOverride
   beforeEach(() => {
-    const { window } = new JSDOM('<!doctype html><html><body></body></html>', { url: 'http://localhost' })
-    global.window = window
-    window.localStorage.clear()
+    localStorageOverride = {
+      getItem: sinon.stub(),
+      removeItem: sinon.stub(),
+      setItem: sinon.stub()
+    }
   })
   it('should not affect localStorage if its data is more recent', () => {
-    const nonClearedItemKey = 'SPLITIO.should_not_be_cleared'
-    window.localStorage.setItem(nonClearedItemKey, true)
-    window.localStorage.setItem(TILL_KEY, LARGER_SINCE)
+    localStorageOverride.getItem.returns(LARGER_SINCE)
 
-    loadDataIntoLocalStorage({ serializedData: { since: SMALLER_SINCE } })
+    loadDataIntoLocalStorage({ serializedData: { since: SMALLER_SINCE } }, localStorageOverride)
 
-    expect(window.localStorage.getItem(nonClearedItemKey)).to.equal('true')
+    expect(localStorageOverride.getItem.calledOnce).to.equal(true)
+    expect(localStorageOverride.removeItem.called).to.equal(false)
+    expect(localStorageOverride.setItem.called).to.equal(false)
   })
 
   it('should clean up localStorage and change till to more recent value with larger since value', () => {
-    const clearedItemKey = 'SPLITIO.should_be_cleared'
-    window.localStorage.setItem(clearedItemKey, true)
-    window.localStorage.setItem(TILL_KEY, SMALLER_SINCE)
+    const removedItemKey = 'SPLITIO.should_be_cleared'
+    localStorageOverride.getItem.onFirstCall().returns(SMALLER_SINCE)
+    localStorageOverride[removedItemKey] = {}
 
     const serializedData = { segmentsData: {}, since: LARGER_SINCE, splitsData: {}, userId: '', usingSegmentsCount: 0 }
-    loadDataIntoLocalStorage({ serializedData })
+    loadDataIntoLocalStorage({ serializedData }, localStorageOverride)
 
-    expect(window.localStorage.getItem(clearedItemKey)).to.equal(null)
-    expect(window.localStorage.getItem(TILL_KEY)).to.equal(LARGER_SINCE.toString())
+    expect(localStorageOverride.removeItem.called).to.equal(true)
+    expect(localStorageOverride.removeItem.calledWith(removedItemKey)).to.equal(true)
+    expect(localStorageOverride.setItem.firstCall.calledWith('SPLITIO.splits.till', LARGER_SINCE)).to.equal(true)
   })
 
   it('should load serialized split data into localStorage properly', () => {
@@ -44,15 +47,13 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
       experiment_1: serializedExperimentOne,
       experiment_2: serializedExperimentTwo
     }
-    window.localStorage.setItem(TILL_KEY, SMALLER_SINCE)
+    localStorageOverride.getItem.onFirstCall().returns(SMALLER_SINCE)
 
     const serializedData = { segmentsData: {}, since: LARGER_SINCE, splitsData, userId: '', usingSegmentsCount: 0 }
-    loadDataIntoLocalStorage({ serializedData })
+    loadDataIntoLocalStorage({ serializedData }, localStorageOverride)
 
-    const resultExperimentOne = window.localStorage.getItem('SPLITIO.split.experiment_1')
-    const resultExperimentTwo = window.localStorage.getItem('SPLITIO.split.experiment_2')
-    expect(resultExperimentOne).to.equal(serializedExperimentOne)
-    expect(resultExperimentTwo).to.equal(serializedExperimentTwo)
+    expect(localStorageOverride.setItem.calledWith('SPLITIO.split.experiment_1', serializedExperimentOne)).to.equal(true)
+    expect(localStorageOverride.setItem.calledWith('SPLITIO.split.experiment_2', serializedExperimentTwo)).to.equal(true)
   })
 
   it('should load segments data into localStorage properly', () => {
@@ -62,13 +63,13 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
       segment_1: [userId, 'visitor_guid_2'],
       segment_2: [userId, 'visitor_guid_3']
     }
-    window.localStorage.setItem(TILL_KEY, SMALLER_SINCE)
+    localStorageOverride.getItem.onFirstCall().returns(SMALLER_SINCE)
 
     const serializedData = { segmentsData, since: LARGER_SINCE, splitsData: {}, userId, usingSegmentsCount }
-    loadDataIntoLocalStorage({ serializedData })
+    loadDataIntoLocalStorage({ serializedData }, localStorageOverride)
 
-    expect(window.localStorage.getItem('SPLITIO.splits.usingSegments')).to.equal(usingSegmentsCount.toString())
-    expect(window.localStorage.getItem('visitor_guid_1.SPLITIO.segment.segment_1')).to.equal('1')
-    expect(window.localStorage.getItem('visitor_guid_1.SPLITIO.segment.segment_2')).to.equal('1')
+    expect(localStorageOverride.setItem.calledWith('SPLITIO.splits.usingSegments', usingSegmentsCount)).to.equal(true)
+    expect(localStorageOverride.setItem.calledWith('visitor_guid_1.SPLITIO.segment.segment_1', '1')).to.equal(true)
+    expect(localStorageOverride.setItem.calledWith('visitor_guid_1.SPLITIO.segment.segment_2', '1')).to.equal(true)
   })
 })

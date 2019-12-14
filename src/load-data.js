@@ -2,9 +2,8 @@
 
 const TILL_KEY = 'SPLITIO.splits.till'
 
-export default function loadDataIntoLocalStorage ({ serializedData = {} }) {
+export default function loadDataIntoLocalStorage ({ serializedData = {} }, windowLocalStorage = {}) {
   const { segmentsData, since, splitsData, userId, usingSegmentsCount } = serializedData
-  const windowLocalStorage = window.localStorage
 
   // Do not load data if current localStorage data is more recent
   if (since <= windowLocalStorage.getItem(TILL_KEY)) {
