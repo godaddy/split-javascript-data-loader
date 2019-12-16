@@ -32,7 +32,7 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     localStorageOverride.getItem.onFirstCall().returns(SMALLER_SINCE)
     localStorageOverride[removedItemKey] = {}
 
-    const serializedData = { segmentsData: {}, since: LARGER_SINCE, splitsData: {}, userId: '', usingSegmentsCount: 0 }
+    const serializedData = { segmentsData: {}, since: LARGER_SINCE, splitsData: {}, usingSegmentsCount: 0 }
     loadDataIntoLocalStorage({ serializedData }, localStorageOverride)
 
     expect(localStorageOverride.removeItem.called).to.equal(true)
@@ -49,7 +49,7 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     }
     localStorageOverride.getItem.onFirstCall().returns(SMALLER_SINCE)
 
-    const serializedData = { segmentsData: {}, since: LARGER_SINCE, splitsData, userId: '', usingSegmentsCount: 0 }
+    const serializedData = { segmentsData: {}, since: LARGER_SINCE, splitsData, usingSegmentsCount: 0 }
     loadDataIntoLocalStorage({ serializedData }, localStorageOverride)
 
     expect(localStorageOverride.setItem.calledWith('SPLITIO.split.experiment_1', serializedExperimentOne)).to.equal(true)
@@ -65,8 +65,8 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     }
     localStorageOverride.getItem.onFirstCall().returns(SMALLER_SINCE)
 
-    const serializedData = { segmentsData, since: LARGER_SINCE, splitsData: {}, userId, usingSegmentsCount }
-    loadDataIntoLocalStorage({ serializedData }, localStorageOverride)
+    const serializedData = { segmentsData, since: LARGER_SINCE, splitsData: {}, usingSegmentsCount }
+    loadDataIntoLocalStorage({ serializedData, userId }, localStorageOverride)
 
     expect(localStorageOverride.setItem.calledWith('SPLITIO.splits.usingSegments', usingSegmentsCount)).to.equal(true)
     expect(localStorageOverride.setItem.calledWith('visitor_guid_1.SPLITIO.segment.segment_1', '1')).to.equal(true)
