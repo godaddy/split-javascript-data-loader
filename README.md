@@ -23,8 +23,8 @@ import loadDataIntoLocalStorage from '@godaddy/split-data-loader'
 loadDataIntoLocalStorage({
   serializedData: {
     segmentsData: {
-      "segment_1": ['test-visitor-1', 'test-visitor-2', 'test-shopper-1'],
-      "segment_2": ['test-visitor-1', 'test-visitor-3', 'test-shopper-2']
+      "segment_1": "{ name: 'segment_1', added: ['test-visitor-1', 'test-visitor-2', 'test-shopper-1'] }",
+      "segment_2": "{ name: 'segment_2', added: ['test-visitor-1', 'test-visitor-3', 'test-shopper-2'] }"
     },
     since: '-1',
     splitsData: {
