@@ -45,7 +45,7 @@ You can use this function to store the following in browser `localStorage`:
 - Freshness of your data
 - Serialized split data
 - Count of splits using segments
-- Indicators for which segments the pertaining `userId` is a part of
+- Indicators for which segments a `userId` is a part of
 
 The following option properties are available:
 
