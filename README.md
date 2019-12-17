@@ -14,7 +14,7 @@ $ npm i @godaddy/split-data-loader --save
 
 Use this package if you are using Split.io for experimentation on a webpage and want to take advantage of browser caching with [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
 
-Please note that this package is intended to be used in tandem with a split data serializer to format the `serializedData` parameter properly. 
+Please note that this package is intended to be used in tandem with a split data serializer to create the `serializedData` parameter properly.
 An example of such serializer is [`split-node-serializer`](https://github.com/godaddy/split-node-serializer).
 
 ```js
@@ -41,13 +41,19 @@ loadDataIntoLocalStorage({
 
 #### loadDataIntoLocalStorage
 
+You can use this function to store the following in browser `localStorage`:
+- Freshness of your data
+- Serialized split data
+- Count of splits using segments
+- Indicators for which segments the pertaining `userId` is a part of
+
 The following option properties are available:
 
 | Property                          | Description |
 |-----------------------------------|-------------|
 | serializedData.segmentsData       | An object of segment data you want to use to cache which segments a given `userId` is part of. (required) |
 | serializedData.since              | The freshness of the incoming serialized data. If this is less than or equal to the `since` value in localStorage, nothing will happen. (required) |
-| serializedData.splitsData         | An object of split data you want to cache. (required) |
+| serializedData.splitsData         | An object of serialized split data you want to cache. (required) |
 | serializedData.usingSegmentsCount | The count of how many splits are using segments. (required) |
 | userId                            | The user id to use as a key for Split.io. Either a hashed shopperId or visitorGuid. (required) |
 
