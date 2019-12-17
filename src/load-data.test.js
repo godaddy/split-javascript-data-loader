@@ -35,7 +35,6 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     const serializedData = { segmentsData: {}, since: LARGER_SINCE, splitsData: {}, usingSegmentsCount: 0 }
     loadDataIntoLocalStorage({ serializedData }, localStorageOverride)
 
-    expect(localStorageOverride.removeItem.called).to.equal(true)
     expect(localStorageOverride.removeItem.calledWith(removedItemKey)).to.equal(true)
     expect(localStorageOverride.setItem.firstCall.calledWith('SPLITIO.splits.till', LARGER_SINCE)).to.equal(true)
   })
