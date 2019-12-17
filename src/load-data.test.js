@@ -59,8 +59,8 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     const userId = 'visitor_guid_1'
     const usingSegmentsCount = 2
     const segmentsData = {
-      segment_1: [userId, 'visitor_guid_2'],
-      segment_2: [userId, 'visitor_guid_3']
+      segment_1: `{ "name": "segment_1", "added": ["${userId}", "visitor_guid_2"] }`,
+      segment_2: `{ "name": "segment_2", "added": ["${userId}", "visitor_guid_3"] }`
     }
     localStorageOverride.getItem.onFirstCall().returns(SMALLER_SINCE)
 

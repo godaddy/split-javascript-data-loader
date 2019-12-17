@@ -23,10 +23,11 @@ export default function loadDataIntoLocalStorage ({ serializedData = {}, userId 
   })
 
   windowLocalStorage.setItem('SPLITIO.splits.usingSegments', usingSegmentsCount)
-  // segmentsData in an object where the property is the segment name and the pertaining value is an array of userIds
+  // segmentsData in an object where the property is the segment name and the pertaining value is a stringified object that contains the `added` array of userIds
   Object.keys(segmentsData).forEach(segmentName => {
     const key = `${userId}.SPLITIO.segment.${segmentName}`
-    if (segmentsData[segmentName].includes(userId) && windowLocalStorage.getItem(key) !== '1') {
+    const added = JSON.parse(segmentsData[segmentName]).added
+    if (added.includes(userId) && windowLocalStorage.getItem(key) !== '1') {
       windowLocalStorage.setItem(key, '1')
     }
   })
