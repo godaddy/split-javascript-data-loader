@@ -10,6 +10,47 @@ Install via npm:
 $ npm i @godaddy/split-data-loader --save
 ```
 
+## Usage
+
+Use this package if you are using Split.io for experimentation on a webpage and want to take advantage of browser caching with [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
+
+Please note that this package is intended to be used in tandem with a split data serializer to format the `serializedData` parameter properly. 
+An example of such serializer is [`split-node-serializer`](https://github.com/godaddy/split-node-serializer).
+
+```js
+import loadDataIntoLocalStorage from '@godaddy/split-data-loader'
+
+loadDataIntoLocalStorage({
+  serializedData: {
+    segmentsData: {
+      "segment_1": ['test-visitor-1', 'test-visitor-2', 'test-shopper-1'],
+      "segment_2": ['test-visitor-1', 'test-visitor-3', 'test-shopper-2']
+    },
+    since: '-1',
+    splitsData: {
+      "experiment_1": "{ name: 'experiment_1', status: 'foo' }",
+      "experiment_2": "{ name: 'experiment_2', status: 'bar' }"
+    },
+    usingSegmentsCount: 2
+  },
+  userId: 'test-visitor-1'
+})
+```
+
+### Function
+
+#### loadDataIntoLocalStorage
+
+The following option properties are available:
+
+| Property                          | Description |
+|-----------------------------------|-------------|
+| serializedData.segmentsData       | An object of segment data you want to use to cache which segments a given `userId` is part of. (required) |
+| serializedData.since              | The freshness of the incoming serialized data. If this is less than or equal to the `since` value in localStorage, nothing will happen. (required) |
+| serializedData.splitsData         | An object of split data you want to cache. (required) |
+| serializedData.usingSegmentsCount | The count of how many splits are using segments. (required) |
+| userId                            | The user id to use as a key for Split.io. Either a hashed shopperId or visitorGuid. (required) |
+
 ## Testing
 
 Run the linter:
