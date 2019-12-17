@@ -54,8 +54,8 @@ The following option properties are available:
 | serializedData.segmentsData       | An object of segment data you want to use to cache which segments a given `userId` is part of. (required) |
 | serializedData.since              | The freshness of the incoming serialized data. If this is less than or equal to the `since` value in localStorage, nothing will happen. (required) |
 | serializedData.splitsData         | An object of serialized split data you want to cache. (required) |
-| serializedData.usingSegmentsCount | The count of how many splits are using segments. (required) |
-| userId                            | The user id to use as a key for Split.io. Either a hashed shopperId or visitorGuid. (required) |
+| serializedData.usingSegmentsCount | The count of splits using segments. (required) |
+| userId                            | The user id that is a part of an experiment. Either a hashed shopperId or visitorGuid. (required) |
 
 ## Testing
 
