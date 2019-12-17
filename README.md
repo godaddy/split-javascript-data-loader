@@ -26,7 +26,7 @@ loadDataIntoLocalStorage({
       "segment_1": "{ name: 'segment_1', added: ['test-visitor-1', 'test-visitor-2', 'test-shopper-1'] }",
       "segment_2": "{ name: 'segment_2', added: ['test-visitor-1', 'test-visitor-3', 'test-shopper-2'] }"
     },
-    since: '-1',
+    since: '100',
     splitsData: {
       "experiment_1": "{ name: 'experiment_1', status: 'foo' }",
       "experiment_2": "{ name: 'experiment_2', status: 'bar' }"
@@ -35,6 +35,15 @@ loadDataIntoLocalStorage({
   },
   userId: 'test-visitor-1'
 })
+// console.log(window.localStorage)
+// {
+//   "SPLITIO.splits.till": "100",
+//   "SPLITIO.split.experiment_1": "{ name: 'experiment_1', status: 'foo' }",
+//   "SPLITIO.split.experiment_2": "{ name: 'experiment_2', status: 'bar' }",
+//   "SPLITIO.splits.usingSegments": "2",
+//   "test-visitor-1.SPLITIO.segment.segment_1": "1",
+//   "test-visitor-1.SPLITIO.segment.segment_2": "1"
+// }
 ```
 
 ### Function
