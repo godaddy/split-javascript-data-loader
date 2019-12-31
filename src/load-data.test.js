@@ -5,6 +5,7 @@ import sinon from 'sinon'
 
 import loadDataIntoLocalStorage from './load-data'
 
+const DEFAULT_SERIALIZED_DATA = { segmentsData: {}, since: 0, splitsData: {}, usingSegmentsCount: 0 }
 const SMALLER_SINCE = 0
 const LARGER_SINCE = 1
 
@@ -17,7 +18,7 @@ function expectAllStubsToNotBeCalled (localStorageOverride) {
 describe('lib.load-data.loadDataIntoLocalStorage', () => {
   let defaultSerializedData, localStorageOverride
   beforeEach(() => {
-    defaultSerializedData = { segmentsData: {}, since: 0, splitsData: {}, usingSegmentsCount: 0 }
+    defaultSerializedData = Object.assign({}, DEFAULT_SERIALIZED_DATA)
     localStorageOverride = {
       getItem: sinon.stub(),
       removeItem: sinon.stub(),
@@ -31,32 +32,16 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     expectAllStubsToNotBeCalled(localStorageOverride)
   })
 
-  it('should not affect localStorage if segmentsData is falsey', () => {
-    delete defaultSerializedData.segmentsData
-    loadDataIntoLocalStorage({ serializedData: defaultSerializedData }, localStorageOverride)
+  it('should not affect localStorage if a serializedData property is falsey', () => {
+    const properties = ['segmentsData', 'since', 'splitsData', 'usingSegmentsCount']
+    properties.forEach(property => {
+      delete defaultSerializedData[property]
 
-    expectAllStubsToNotBeCalled(localStorageOverride)
-  })
+      loadDataIntoLocalStorage({ serializedData: defaultSerializedData }, localStorageOverride)
 
-  it('should not affect localStorage if since is falsey', () => {
-    delete defaultSerializedData.since
-    loadDataIntoLocalStorage({ serializedData: defaultSerializedData }, localStorageOverride)
-
-    expectAllStubsToNotBeCalled(localStorageOverride)
-  })
-
-  it('should not affect localStorage if splitsData is falsey', () => {
-    delete defaultSerializedData.splitsData
-    loadDataIntoLocalStorage({ serializedData: defaultSerializedData }, localStorageOverride)
-
-    expectAllStubsToNotBeCalled(localStorageOverride)
-  })
-
-  it('should not affect localStorage if usingSegmentsCount is falsey', () => {
-    delete defaultSerializedData.usingSegmentsCount
-    loadDataIntoLocalStorage({ serializedData: defaultSerializedData }, localStorageOverride)
-
-    expectAllStubsToNotBeCalled(localStorageOverride)
+      expectAllStubsToNotBeCalled(localStorageOverride)
+      defaultSerializedData = Object.assign({}, DEFAULT_SERIALIZED_DATA)
+    })
   })
 
   it('should not affect localStorage if its data is more recent', () => {
@@ -75,10 +60,8 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     const removedItemKey = 'SPLITIO.should_be_cleared'
     localStorageOverride.getItem.onFirstCall().returns(SMALLER_SINCE)
     localStorageOverride[removedItemKey] = {}
-    defaultSerializedData.since = SMALLER_SINCE
 
-    const serializedData = defaultSerializedData
-    serializedData.since = LARGER_SINCE
+    const serializedData = { segmentsData: {}, since: LARGER_SINCE, splitsData: {}, usingSegmentsCount: 0 }
     loadDataIntoLocalStorage({ serializedData }, localStorageOverride)
 
     expect(localStorageOverride.removeItem.calledWith(removedItemKey)).to.equal(true)
@@ -94,9 +77,7 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     }
     localStorageOverride.getItem.onFirstCall().returns(SMALLER_SINCE)
 
-    const serializedData = defaultSerializedData
-    serializedData.since = LARGER_SINCE
-    serializedData.splitsData = splitsData
+    const serializedData = { segmentsData: {}, since: LARGER_SINCE, splitsData, usingSegmentsCount: 0 }
     loadDataIntoLocalStorage({ serializedData }, localStorageOverride)
 
     expect(localStorageOverride.setItem.calledWith('SPLITIO.split.experiment_1', serializedExperimentOne)).to.equal(true)
@@ -112,10 +93,7 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     }
     localStorageOverride.getItem.onFirstCall().returns(SMALLER_SINCE)
 
-    const serializedData = defaultSerializedData
-    serializedData.since = LARGER_SINCE
-    serializedData.segmentsData = segmentsData
-    serializedData.usingSegmentsCount = usingSegmentsCount
+    const serializedData = { segmentsData, since: LARGER_SINCE, splitsData: {}, usingSegmentsCount }
     loadDataIntoLocalStorage({ serializedData, userId }, localStorageOverride)
 
     expect(localStorageOverride.setItem.calledWith('SPLITIO.splits.usingSegments', usingSegmentsCount)).to.equal(true)
