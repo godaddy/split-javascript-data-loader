@@ -26,12 +26,6 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     }
   })
 
-  it('should not affect localStorage if serializedData is null', () => {
-    loadDataIntoLocalStorage({ serializedData: null }, localStorageOverride)
-
-    expectAllStubsToNotBeCalled(localStorageOverride)
-  })
-
   it('should not affect localStorage if a serializedData property is falsey', () => {
     const properties = ['segmentsData', 'since', 'splitsData', 'usingSegmentsCount']
     properties.forEach(property => {

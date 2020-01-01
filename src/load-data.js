@@ -3,14 +3,13 @@
 const TILL_KEY = 'SPLITIO.splits.till'
 
 export default function loadDataIntoLocalStorage ({ serializedData = {}, userId = '' }, windowLocalStorage = window.localStorage) {
-  if (!serializedData) {
+  if (!('segmentsData' in serializedData) ||
+    !('since' in serializedData) ||
+    !('splitsData' in serializedData) ||
+    !('usingSegmentsCount' in serializedData)) {
     return
   }
-
   const { segmentsData, since, splitsData, usingSegmentsCount } = serializedData
-  if (!segmentsData || (!since && since !== 0) || !splitsData || (!usingSegmentsCount && usingSegmentsCount !== 0)) {
-    return
-  }
 
   // Do not load data if current localStorage data is more recent
   if (since <= windowLocalStorage.getItem(TILL_KEY)) {
