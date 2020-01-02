@@ -5,22 +5,41 @@ import sinon from 'sinon'
 
 import loadDataIntoLocalStorage from './load-data'
 
+const DEFAULT_SERIALIZED_DATA = { segmentsData: {}, since: 0, splitsData: {}, usingSegmentsCount: 0 }
 const SMALLER_SINCE = 0
 const LARGER_SINCE = 1
 
 describe('lib.load-data.loadDataIntoLocalStorage', () => {
-  let localStorageOverride
+  let defaultSerializedData, localStorageOverride
   beforeEach(() => {
+    defaultSerializedData = Object.assign({}, DEFAULT_SERIALIZED_DATA)
     localStorageOverride = {
       getItem: sinon.stub(),
       removeItem: sinon.stub(),
       setItem: sinon.stub()
     }
   })
+
+  it('should not affect localStorage if a serializedData property is falsey', () => {
+    const properties = ['segmentsData', 'since', 'splitsData', 'usingSegmentsCount']
+    properties.forEach(property => {
+      delete defaultSerializedData[property]
+
+      loadDataIntoLocalStorage({ serializedData: defaultSerializedData }, localStorageOverride)
+
+      expect(localStorageOverride.getItem.calledOnce).to.equal(false)
+      expect(localStorageOverride.removeItem.called).to.equal(false)
+      expect(localStorageOverride.setItem.called).to.equal(false)
+      defaultSerializedData = Object.assign({}, DEFAULT_SERIALIZED_DATA)
+    })
+  })
+
   it('should not affect localStorage if its data is more recent', () => {
     localStorageOverride.getItem.returns(LARGER_SINCE)
 
-    loadDataIntoLocalStorage({ serializedData: { since: SMALLER_SINCE } }, localStorageOverride)
+    const serializedData = defaultSerializedData
+    serializedData.since = SMALLER_SINCE
+    loadDataIntoLocalStorage({ serializedData }, localStorageOverride)
 
     expect(localStorageOverride.getItem.calledOnce).to.equal(true)
     expect(localStorageOverride.removeItem.called).to.equal(false)
