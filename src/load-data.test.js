@@ -9,12 +9,6 @@ const DEFAULT_SERIALIZED_DATA = { segmentsData: {}, since: 0, splitsData: {}, us
 const SMALLER_SINCE = 0
 const LARGER_SINCE = 1
 
-function expectAllStubsToNotBeCalled (localStorageOverride) {
-  expect(localStorageOverride.getItem.calledOnce).to.equal(false)
-  expect(localStorageOverride.removeItem.called).to.equal(false)
-  expect(localStorageOverride.setItem.called).to.equal(false)
-}
-
 describe('lib.load-data.loadDataIntoLocalStorage', () => {
   let defaultSerializedData, localStorageOverride
   beforeEach(() => {
@@ -33,7 +27,9 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
 
       loadDataIntoLocalStorage({ serializedData: defaultSerializedData }, localStorageOverride)
 
-      expectAllStubsToNotBeCalled(localStorageOverride)
+      expect(localStorageOverride.getItem.calledOnce).to.equal(false)
+      expect(localStorageOverride.removeItem.called).to.equal(false)
+      expect(localStorageOverride.setItem.called).to.equal(false)
       defaultSerializedData = Object.assign({}, DEFAULT_SERIALIZED_DATA)
     })
   })
