@@ -84,10 +84,24 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     localStorageOverride.getItem.onFirstCall().returns(SMALLER_SINCE)
 
     const serializedData = { segmentsData, since: LARGER_SINCE, splitsData: {}, usingSegmentsCount }
-    loadDataIntoLocalStorage({ serializedData, userId }, localStorageOverride)
+    loadDataIntoLocalStorage({ serializedData, userId, localStorageUserId: userId }, localStorageOverride)
 
     expect(localStorageOverride.setItem.calledWith('SPLITIO.splits.usingSegments', usingSegmentsCount)).to.equal(true)
     expect(localStorageOverride.setItem.calledWith('visitor_guid_1.SPLITIO.segment.segment_1', '1')).to.equal(true)
     expect(localStorageOverride.setItem.calledWith('visitor_guid_1.SPLITIO.segment.segment_2', '1')).to.equal(true)
+  })
+
+  it('should load segments data into localStorage properly with localStorageUserId in key', () => {
+    const localStorageUserId = 'format-visitor'
+    const userId = 'visitor_guid_1'
+    const segmentsData = {
+      segment_1: `{ "name": "segment_1", "added": ["${userId}", "visitor_guid_2"] }`
+    }
+    localStorageOverride.getItem.onFirstCall().returns(SMALLER_SINCE)
+
+    const serializedData = { segmentsData, since: LARGER_SINCE, splitsData: {}, usingSegmentsCount: 1 }
+    loadDataIntoLocalStorage({ serializedData, userId, localStorageUserId }, localStorageOverride)
+
+    expect(localStorageOverride.setItem.calledWith(`${localStorageUserId}.SPLITIO.segment.segment_1`, '1')).to.equal(true)
   })
 })

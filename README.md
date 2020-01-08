@@ -33,7 +33,8 @@ loadDataIntoLocalStorage({
     },
     usingSegmentsCount: 2
   },
-  userId: 'test-visitor-1'
+  userId: 'test-visitor-1',
+  localStorageUserId: 'formatted-visitor'
 })
 // console.log(window.localStorage)
 // {
@@ -41,8 +42,8 @@ loadDataIntoLocalStorage({
 //   "SPLITIO.split.experiment_1": "{ name: 'experiment_1', status: 'foo' }",
 //   "SPLITIO.split.experiment_2": "{ name: 'experiment_2', status: 'bar' }",
 //   "SPLITIO.splits.usingSegments": "2",
-//   "test-visitor-1.SPLITIO.segment.segment_1": "1",
-//   "test-visitor-1.SPLITIO.segment.segment_2": "1"
+//   "formatted-visitor.SPLITIO.segment.segment_1": "1",
+//   "formatted-visitor.SPLITIO.segment.segment_2": "1"
 // }
 ```
 
@@ -65,6 +66,7 @@ The following option properties are available:
 | serializedData.splitsData         | An object of serialized split data you want to cache. (required) |
 | serializedData.usingSegmentsCount | The count of splits using segments. (required) |
 | userId                            | The user id that is a part of an experiment. Either a hashed shopperId or visitorGuid. (required) |
+| localStorageUserId                | The string that will represent the userId in the localStorage key related to segments data. (required) |
 
 ## Testing
 
