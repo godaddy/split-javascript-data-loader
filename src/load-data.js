@@ -2,7 +2,7 @@
 
 const TILL_KEY = 'SPLITIO.splits.till'
 
-export default function loadDataIntoLocalStorage ({ serializedData = {}, userId = '', localStorageUserId = '' }, windowLocalStorage = window.localStorage) {
+export default function loadDataIntoLocalStorage ({ serializedData = {}, userId = '', localStorageUserId = userId }, windowLocalStorage = window.localStorage) {
   if (!('segmentsData' in serializedData) ||
     !('since' in serializedData) ||
     !('splitsData' in serializedData) ||

@@ -66,7 +66,7 @@ The following option properties are available:
 | serializedData.splitsData         | An object of serialized split data you want to cache. (required) |
 | serializedData.usingSegmentsCount | The count of splits using segments. (required) |
 | userId                            | The user id that is a part of an experiment. Either a hashed shopperId or visitorGuid. (required) |
-| localStorageUserId                | The string that will represent the userId in the localStorage key related to segments data. (required) |
+| localStorageUserId                | The string that will represent the userId in the localStorage key related to segments data. (optional) |
 
 ## Testing
 
