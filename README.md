@@ -65,6 +65,7 @@ The following option properties are available:
 | serializedData.splitsData         | An object of serialized split data you want to cache. (required) |
 | serializedData.usingSegmentsCount | The count of splits using segments. (required) |
 | userId                            | The user id that is a part of an experiment. Either a hashed shopperId or visitorGuid. (required) |
+| storagePrefix                     | An optional parameter that represents the storage.prefix in the [SplitIO configuration](https://help.split.io/hc/en-us/articles/360020448791-JavaScript-SDK#configuration) of the SplitIO factory you are using. |
 
 ## Testing
 
