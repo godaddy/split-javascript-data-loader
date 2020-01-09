@@ -3,7 +3,7 @@
 const DEFAULT_LOCALSTORAGE_PREFIX = 'SPLITIO'
 
 export default function loadDataIntoLocalStorage ({ serializedData = {}, userId = '', storagePrefix = '' }, windowLocalStorage = window.localStorage) {
-  const localStoragePrefix = (storagePrefix) ? `${storagePrefix}.${DEFAULT_LOCALSTORAGE_PREFIX}` : DEFAULT_LOCALSTORAGE_PREFIX
+  const localStoragePrefix = storagePrefix ? `${storagePrefix}.${DEFAULT_LOCALSTORAGE_PREFIX}` : DEFAULT_LOCALSTORAGE_PREFIX
   const tillKey = `${localStoragePrefix}.splits.till`
 
   if (!('segmentsData' in serializedData) ||
