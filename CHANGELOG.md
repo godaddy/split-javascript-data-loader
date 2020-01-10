@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/godaddy/split-javascript-data-loader/compare/1.0.0...1.1.0) (2020-01-10)
+
+
+### Features
+
+* **dataLoader:** handle falsey serialized data values ([#13](https://github.com/godaddy/split-javascript-data-loader/issues/13)) ([e2f66a5](https://github.com/godaddy/split-javascript-data-loader/commit/e2f66a5614e6e41ceb2dfe179c0e826a57049c55))
+* support for optional storagePrefix parameter ([#17](https://github.com/godaddy/split-javascript-data-loader/issues/17)) ([cce57d6](https://github.com/godaddy/split-javascript-data-loader/commit/cce57d62061dcfa82249f8ff7c362888ef90304c))
+
 ## 1.0.0 (2019-12-18)
 
 
