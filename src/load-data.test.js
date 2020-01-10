@@ -90,4 +90,27 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     expect(localStorageOverride.setItem.calledWith('visitor_guid_1.SPLITIO.segment.segment_1', '1')).to.equal(true)
     expect(localStorageOverride.setItem.calledWith('visitor_guid_1.SPLITIO.segment.segment_2', '1')).to.equal(true)
   })
+
+  it('should call localStorage properly with storagePrefix passed in', () => {
+    const storagePrefix = 'visitorGuid'
+    const removedItemKey = `${storagePrefix}.SPLITIO.should_be_cleared`
+    localStorageOverride[removedItemKey] = {}
+
+    const splitsData = {
+      experiment_1: 'serialized_experiment_1'
+    }
+    const segmentsData = {
+      segment_1: '{ "name": "segment_1", "added": ["visitor_guid_1", "visitor_guid_2"] }'
+    }
+    localStorageOverride.getItem.onFirstCall().returns(SMALLER_SINCE)
+
+    const serializedData = { segmentsData, since: LARGER_SINCE, splitsData, usingSegmentsCount: 1 }
+    loadDataIntoLocalStorage({ serializedData, userId: 'visitor_guid_1', storagePrefix }, localStorageOverride)
+
+    expect(localStorageOverride.removeItem.calledWith(removedItemKey)).to.equal(true)
+    expect(localStorageOverride.setItem.calledWith('visitorGuid.SPLITIO.splits.till', LARGER_SINCE)).to.equal(true)
+    expect(localStorageOverride.setItem.calledWith('visitorGuid.SPLITIO.split.experiment_1', 'serialized_experiment_1')).to.equal(true)
+    expect(localStorageOverride.setItem.calledWith('visitorGuid.SPLITIO.splits.usingSegments', 1)).to.equal(true)
+    expect(localStorageOverride.setItem.calledWith('visitor_guid_1.visitorGuid.SPLITIO.segment.segment_1', '1')).to.equal(true)
+  })
 })
