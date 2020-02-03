@@ -36,3 +36,6 @@ jobs:
 
       # run coverage
       - run: npm run coverage
+
+      # run build dry
+      - run: npm run build-dry
