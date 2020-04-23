@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/godaddy/split-javascript-data-loader/compare/1.1.0...1.1.1) (2020-04-23)
+
+
+### Bug Fixes
+
+* **load-data:** Set default values for the serialized data ([ff14a46](https://github.com/godaddy/split-javascript-data-loader/commit/ff14a4645adca64ea3538b33eaf43665c481a7d2))
+
 ## [1.1.0](https://github.com/godaddy/split-javascript-data-loader/compare/1.0.0...1.1.0) (2020-01-10)
 
 
