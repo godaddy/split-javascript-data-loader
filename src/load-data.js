@@ -10,13 +10,12 @@ export default function loadDataIntoLocalStorage ({
   const localStoragePrefix = storagePrefix ? `${storagePrefix}.${DEFAULT_LOCALSTORAGE_PREFIX}` : DEFAULT_LOCALSTORAGE_PREFIX
   const tillKey = `${localStoragePrefix}.splits.till`
 
-  if (!('segmentsData' in serializedData) ||
-    !('since' in serializedData) ||
-    !('splitsData' in serializedData) ||
-    !('usingSegmentsCount' in serializedData)) {
+  // Do not load data if current serializedData is empty
+  if (Object.keys(serializedData).length === 0) {
     return
   }
-  const { segmentsData, since, splitsData, usingSegmentsCount } = serializedData
+
+  const { segmentsData = {}, since = 0, splitsData = {}, usingSegmentsCount = 0 } = serializedData
 
   // Do not load data if current localStorage data is more recent
   if (since <= windowLocalStorage.getItem(tillKey)) {

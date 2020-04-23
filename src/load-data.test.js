@@ -20,18 +20,12 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     }
   })
 
-  it('should not affect localStorage if a serializedData property is falsey', () => {
-    const properties = ['segmentsData', 'since', 'splitsData', 'usingSegmentsCount']
-    properties.forEach(property => {
-      delete defaultSerializedData[property]
+  it('should not affect localStorage if serializedData is empty', () => {
+    loadDataIntoLocalStorage({ serializedData: {} }, localStorageOverride)
 
-      loadDataIntoLocalStorage({ serializedData: defaultSerializedData }, localStorageOverride)
-
-      expect(localStorageOverride.getItem.calledOnce).to.equal(false)
-      expect(localStorageOverride.removeItem.called).to.equal(false)
-      expect(localStorageOverride.setItem.called).to.equal(false)
-      defaultSerializedData = Object.assign({}, DEFAULT_SERIALIZED_DATA)
-    })
+    expect(localStorageOverride.getItem.calledOnce).to.equal(false)
+    expect(localStorageOverride.removeItem.called).to.equal(false)
+    expect(localStorageOverride.setItem.called).to.equal(false)
   })
 
   it('should not affect localStorage if its data is more recent', () => {
@@ -68,6 +62,22 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     localStorageOverride.getItem.onFirstCall().returns(SMALLER_SINCE)
 
     const serializedData = { segmentsData: {}, since: LARGER_SINCE, splitsData, usingSegmentsCount: 0 }
+    loadDataIntoLocalStorage({ serializedData }, localStorageOverride)
+
+    expect(localStorageOverride.setItem.calledWith('SPLITIO.split.experiment_1', serializedExperimentOne)).to.equal(true)
+    expect(localStorageOverride.setItem.calledWith('SPLITIO.split.experiment_2', serializedExperimentTwo)).to.equal(true)
+  })
+
+  it('should load serialized split data even if segmentsData & usingSegmentsCount are empty', () => {
+    const serializedExperimentOne = 'serialized_experiment_1'
+    const serializedExperimentTwo = 'serialized_experiment_2'
+    const splitsData = {
+      experiment_1: serializedExperimentOne,
+      experiment_2: serializedExperimentTwo
+    }
+    localStorageOverride.getItem.onFirstCall().returns(SMALLER_SINCE)
+
+    const serializedData = { since: LARGER_SINCE, splitsData }
     loadDataIntoLocalStorage({ serializedData }, localStorageOverride)
 
     expect(localStorageOverride.setItem.calledWith('SPLITIO.split.experiment_1', serializedExperimentOne)).to.equal(true)
