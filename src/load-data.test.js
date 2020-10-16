@@ -123,4 +123,33 @@ describe('lib.load-data.loadDataIntoLocalStorage', () => {
     expect(localStorageOverride.setItem.calledWith('visitorGuid.SPLITIO.splits.usingSegments', 1)).to.equal(true)
     expect(localStorageOverride.setItem.calledWith('visitor_guid_1.visitorGuid.SPLITIO.segment.segment_1', '1')).to.equal(true)
   })
+
+  it('should clean up any set item if localStorage.setItem throws an error', () => {
+    const serializedExperimentOne = 'serialized_experiment_1'
+    const serializedExperimentTwo = 'serialized_experiment_2'
+    const splitsData = {
+      experiment_1: serializedExperimentOne,
+      experiment_2: serializedExperimentTwo
+    }
+    localStorageOverride['SPLITIO.splits.till'] = SMALLER_SINCE
+    localStorageOverride.getItem.callsFake(item => {
+      return localStorageOverride[item]
+    })
+    localStorageOverride.setItem.onFirstCall().callsFake((item, val) => {
+      localStorageOverride[item] = val
+    })
+    localStorageOverride.setItem.throws()
+    localStorageOverride.removeItem.callsFake(item => {
+      delete localStorageOverride[item]
+    })
+
+    const serializedData = { segmentsData: {}, since: LARGER_SINCE, splitsData, usingSegmentsCount: 0 }
+    loadDataIntoLocalStorage({ serializedData }, localStorageOverride)
+
+    expect(localStorageOverride.setItem.calledWith('SPLITIO.splits.till', LARGER_SINCE)).to.equal(true)
+    expect(localStorageOverride.setItem.calledWith('SPLITIO.split.experiment_1', serializedExperimentOne)).to.equal(true)
+    expect(localStorageOverride.setItem.neverCalledWith('SPLITIO.split.experiment_2', serializedExperimentTwo)).to.equal(true)
+    expect(localStorageOverride.removeItem.calledWith('SPLITIO.splits.till')).to.equal(true)
+    expect(Object.keys(localStorageOverride)).to.not.include.members(['SPLITIO.splits.till', 'SPLITIO.split.experiment_1'])
+  })
 })
