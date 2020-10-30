@@ -41,7 +41,7 @@ export default function loadDataIntoLocalStorage ({
         windowLocalStorage.setItem(key, '1')
       }
     })
-  } catch(err) {
+  } catch (err) {
     console.error('Error setting localstorage', err)
     // Clean any partial data loaded already
     cleanLocalStorage({
@@ -51,7 +51,7 @@ export default function loadDataIntoLocalStorage ({
   }
 }
 
-export function cleanLocalStorage({
+export function cleanLocalStorage ({
   windowLocalStorage = window.localStorage,
   localStoragePrefix
 }) {
