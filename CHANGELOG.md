@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.10](https://github.com/godaddy/split-javascript-data-loader/compare/1.1.9...1.1.10) (2021-05-21)
+
 ### [1.1.9](https://github.com/godaddy/split-javascript-data-loader/compare/1.1.8...1.1.9) (2021-04-05)
 
 ### [1.1.8](https://github.com/godaddy/split-javascript-data-loader/compare/1.1.7...1.1.8) (2021-02-26)
