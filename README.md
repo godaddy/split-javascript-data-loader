@@ -1,5 +1,3 @@
-[![Join Slack](https://img.shields.io/badge/Join%20us%20on-Slack-e01563.svg)](https://godaddy-oss-slack.herokuapp.com/)
-
 # split-javascript-data-loader
 
  Loads serialized rule/segment data from Split.io into the browser local storage.
